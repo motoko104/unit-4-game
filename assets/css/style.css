@@ -1,0 +1,33 @@
+*{
+    background-color: rgb(235, 187, 235);
+    color: black;
+}
+/* Temporary view for seeing the borders*/
+.yourChara, .enemies, .fightingArea, .actionText{
+    height: 100px;
+    border-style: solid;
+    border-color: blue;
+    border-width: 2px;
+}
+h1, h3{
+    font-family: 'Roboto Mono', monospace;
+}
+header {
+    font-size: 50px;
+    text-align: right;
+}
+h3{
+    font-size: 20px;
+    padding: 10px 0px 10px 15px;
+}
+button{
+    background-color: aquamarine;
+    color: black;
+    padding: 8px 10px;
+    position: relative;
+    left: 20px;
+}
+
+.reset{
+    visibility: hidden;
+}
