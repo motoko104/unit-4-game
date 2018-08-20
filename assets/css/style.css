@@ -3,31 +3,36 @@
     color: black;
 }
 /* Temporary view for seeing the borders*/
-.yourChara, .enemies, .fightingArea, .actionText{
-    height: 100px;
+.yourChara, .enemies, .fightingArea {
+    height: 105px;
     border-style: solid;
     border-color: blue;
-    border-width: 2px;
+    border-width: 1px;
 }
-h1, h3{
+.actionText{
+    height: 50px;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+}
+h1, h3 {
     font-family: 'Roboto Mono', monospace;
 }
 header {
-    font-size: 50px;
+    font-size: 40px;
     text-align: right;
 }
 h3{
-    font-size: 20px;
-    padding: 10px 0px 10px 15px;
+    font-size: 18px;
+    padding: 5px 0px 5px 15px;
 }
 button{
     background-color: aquamarine;
     color: black;
-    padding: 8px 10px;
+    padding: 5px 10px;
     position: relative;
     left: 20px;
 }
-
 .reset{
     visibility: hidden;
 }
