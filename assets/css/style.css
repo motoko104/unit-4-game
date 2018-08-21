@@ -26,6 +26,34 @@ h3{
     font-size: 18px;
     padding: 5px 0px 5px 15px;
 }
+.character{
+    display: inline-block;
+    margin: 0px 10px;
+    background-color: white;
+    width: 200px;
+    height: 100px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: green;
+    text-align: center;
+}
+.character-name{
+    font-size: 15px;
+    text-align: center;
+    color: black;
+}
+.image{
+    width:120px;
+    height:60px;
+    margin: 6px;
+    z-index: 20;
+}
+.character-hp{
+    font-size: 10px;
+    text-align: center;
+    color: black;
+    letter-spacing: 2px;
+}
 button{
     background-color: aquamarine;
     color: black;

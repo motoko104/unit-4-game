@@ -1,44 +1,50 @@
-$(document).ready(function(){
-    
-    let goodCharacters = {
-        'Obi Wan': {
+// create characters playable
+    let characters = [
+        {
             name: 'Obi Wan',
             hP: 200,
             attack: 15,
-            imageUrl:
+            imageUrl: "assets/images/placeholderimg.png"
         },
-        'Aayla Secura':{
+        {
             name: 'Aayla Secura',
             hP: 150,
             attack: 10,
-            imageUrl:
+            imageUrl: "assets/images/placeholderimg.png"
         },
-        'Samuel Jackson':{
-            name: 'Samuel Jackson',
-            hP: 225,
-            attack: 15,
-            imageUrl: 
-        }   
-    }
-    let badCharacters = {
-        'Darth Maul':{
+        {
             name:'Darth Maul',
             hP: 175,
             attack: 10,
-            imageUrl: 
+            imageUrl: "assets/images/placeholderimg.png"
         },
-        'General Greivus':{
-            name: 'General Greivus',
-            hP: 200,
-            attack: 15,
-            imageUrl:
-        },
-        'Darth Sidious':{
+        {
             name: 'Darth Sidious',
             hP: 250,
             attack: 20,
-            imagUrl:
+            imageUrl: "assets/images/placeholderimg.png"
         }
-    }
+    ]
+// global variables
+let currentChara;
+let currentEnemy; 
+// adding characters to the character area
 
-});
+let createChar = function (){
+    let i = 0;
+    let charDiv = $('<div class="character '+ characters.name +'">');
+    let charName = $('<p class="character-name">').text(characters[i].name);
+    let charImg = $('<img class="image">').attr("src", characters[i].imageUrl);
+    let charHp = $('<p class="character-hp">').text(characters[i].hP);
+    charDiv.append(charName).append(charImg).append(charHp);
+    $('.yourChara').append(charDiv);
+    i++;
+}
+
+console.log(characters.name);
+$(document).ready(function(){
+    //rendering each character
+   $(characters).each(createChar);
+
+})
+
