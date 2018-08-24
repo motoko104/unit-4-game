@@ -29,9 +29,12 @@ let characters = [
 let currentChara = 0;
 let currentEnemy = 0;
 let defender = 0;
+let yourHp = 0;
+let yourAttack = 0;
+let enemyHp = 0;
+let enemyAttack = 0;
 
 // adding characters to the character area
-
 let createChar = function () {
     for (let i = 0; i < characters.length; i++) {
         let charDiv = $('<div class="character ' + characters[i] + '">');
@@ -40,39 +43,67 @@ let createChar = function () {
         let charHp = $('<p class="character-hp">').text(characters[i].hP);
         charDiv.append(charName).append(charImg).append(charHp);
         $('.yourChara').append(charDiv);
+        
     }
 }
-
-/*let chooseChar = function () {
-    console.log(currentChara, "one");
-    if (currentChara = 0) {
-        console.log(currentChara);
-        $('.characters').addClass(" chosen");
-        $('.chosen').removeClass('characters');
+// function for choosing starter character and moving others to 
+let chooseChar = function (e) {
+    if (currentChara === 0) {
+        $(event.target).addClass("chosen");
+        $(event.target).removeClass('characters');
        currentChara = $('.chosen');
-        for (currentEnemy = 0) {
+       
+       console.log(currentChara);
+        if (currentEnemy === 0){
             let enemies = $('.characters');
             $('.enemies').append(enemies);
             $('.characters').addClass("villain");
             $('.villain').removeClass("characters");
+        }else{
+            let enemyMesg = $('<strong>').text('Keep Fighting!!');
+            $('.enemyMsg').append(enemyMesg);
         }
     } else {
-        let enemyMesg = $('<strong>').text(Please choose an enemy);
+        let enemyMesg = $('<strong>').text('Please choose an enemy');
         $('.enemyMsg').append(enemyMesg);
     }
-    for(){
-        $('.character').addClass('.enemy').removeClass('.character');
-        console.log('.enemy');
+}
+//choose enemy to fight
+let chooseVillain = function (e){
+    if (currentEnemy === 0){
+        $(event.target).addClass("defender");
+        $(event.target).removeClass("villain");
+        currentEnemy = $('.defender');
+        $('.fightingArea').append(currentEnemy);
+    }else{
+        let enemyMesg = $('<strong>').text('Keep Fighting!!');
+        $('.enemyMsg').append(enemyMesg); 
     }
-}*/
+}
+
+// actions for when the attack button is pushed
+let attacking = function (e) {
+    for ( let i = 0; i < characters.length; i++){
+        if( $('currentChara.character-name') === characters[i].name){
+         // not sure how to do this part
+        } 
+    }
+}
 
 $(document).ready(function () {
     //rendering each character
     $(characters).ready(createChar);
-    $('img.image').on('click', function () {
-        console.log(currentChara, "first");
-        //chooseChar();
-    }) // not working, get a selection to respond when a character box is clicked on//
-    /*function for selecting character and moving others to enemy space*/
+    // function to select character and move others to enemy space
+    $(document).on('click','.character', function (e) {
+        chooseChar();
+    })
+    // function to select enemy and move it to the Defender area
+    $(document).on('click','.villain', function (e) {
+        chooseVillain();
+    })
+    // function for action of attack button
+    $(document).on('click','.attack', function (e) {
+        attacking();
+    })
 });
 
