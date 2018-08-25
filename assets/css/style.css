@@ -15,7 +15,7 @@
     border-color: green;
     border-width: 1px;
 }
-h1, h3 {
+h1, h3, p {
     font-family: 'Roboto Mono', monospace;
 }
 header {
@@ -37,7 +37,7 @@ h3{
     border-color: green;
     text-align: center;
 }
-.chosen{
+.chosen {
     display: inline-block;
     margin: 0px 10px;
     background-color:rgb(70, 248, 70);
@@ -69,7 +69,7 @@ h3{
     letter-spacing: 2px;
 }
 .image{
-    width:120px;
+    width:180px;
     height:60px;
     margin: 6px;
     z-index: 20;

@@ -1,4 +1,4 @@
-// create characters playable
+// create characters playable as an object
 let characters = [
     {
         name: 'Obi Wan',
@@ -37,56 +37,54 @@ let enemyAttack = 0;
 // adding characters to the character area
 let createChar = function () {
     for (let i = 0; i < characters.length; i++) {
-        let charDiv = $('<div class="character ' + characters[i] + '">');
+        let charDiv = $('<section class="character ' + characters[i] + '">');
         let charName = $('<p class="character-name">').text(characters[i].name);
         let charImg = $('<img class="image">').attr("src", characters[i].imageUrl);
         let charHp = $('<p class="character-hp">').text(characters[i].hP);
-        charDiv.append(charName).append(charImg).append(charHp);
+        charDiv.append(charName, charImg, charHp);
         $('.yourChara').append(charDiv);
-        
+
     }
 }
-// function for choosing starter character and moving others to 
-let chooseChar = function (e) {
+// function for choosing starter character and moving others to enemy area
+let chooseChar = function () {
+    //sets the current character variable to equal the clicked on character and stores stats. need to fix for when image is clicked.
     if (currentChara === 0) {
-        $(event.target).addClass("chosen");
-        $(event.target).removeClass('characters');
-       currentChara = $('.chosen');
-       
-       console.log(currentChara);
-        if (currentEnemy === 0){
-            let enemies = $('.characters');
-            $('.enemies').append(enemies);
-            $('.characters').addClass("villain");
-            $('.villain').removeClass("characters");
-        }else{
-            let enemyMesg = $('<strong>').text('Keep Fighting!!');
-            $('.enemyMsg').append(enemyMesg);
-        }
+        $(event.target.parentNode).removeClass(".character");
+        $(event.target.parentNode).addClass("chosen");
+        currentChara = $(event.target.parentNode);
+        console.log(currentChara); // trouble getting character to stay
+        // appends other characters by their class name to a new part of the page where the enemies go by the enemies class name
+        let enemies = $('.character');
+        $('.enemies').append(enemies);
+        $('.character').addClass("villain");
+        $('.villain').removeClass(".character");
+        $('section.villain').remove('.chosen');
     } else {
+        // tells player to choose an enemy when they try to click anything else after selecting their character
         let enemyMesg = $('<strong>').text('Please choose an enemy');
-        $('.enemyMsg').append(enemyMesg);
+        $('.enemyMsg').empty().append(enemyMesg);
     }
 }
-//choose enemy to fight
-let chooseVillain = function (e){
-    if (currentEnemy === 0){
-        $(event.target).addClass("defender");
-        $(event.target).removeClass("villain");
-        currentEnemy = $('.defender');
+//choose enemy to fight and move that enemy to the defender area
+let chooseVillain = function () {
+    if (currentEnemy === 0) {
+        $(event.target.parentNode).removeClass(".villain");
+        $(event.target.parentNode).addClass("defender");
+        currentEnemy = $(event.target.parentNode);
         $('.fightingArea').append(currentEnemy);
-    }else{
+    } else {
         let enemyMesg = $('<strong>').text('Keep Fighting!!');
-        $('.enemyMsg').append(enemyMesg); 
+        $('.enemyMsg').append(enemyMesg);
     }
 }
 
 // actions for when the attack button is pushed
-let attacking = function (e) {
-    for ( let i = 0; i < characters.length; i++){
-        if( $('currentChara.character-name') === characters[i].name){
-         // not sure how to do this part
-        } 
+let attacking = function (event) {
+    for (let i = 0; i < characters.length; i++) {
+        if ($('currentChara.character-name') === characters[i].name) {
+            // not sure how to do this part
+        }
     }
 }
 
@@ -94,16 +92,52 @@ $(document).ready(function () {
     //rendering each character
     $(characters).ready(createChar);
     // function to select character and move others to enemy space
-    $(document).on('click','.character', function (e) {
+    $(document).on('click', '.character', function (event) {
         chooseChar();
     })
     // function to select enemy and move it to the Defender area
-    $(document).on('click','.villain', function (e) {
+    $(document).on('click', '.villain', function (event) {
         chooseVillain();
     })
     // function for action of attack button
-    $(document).on('click','.attack', function (e) {
+    $(document).on('click', '.attack', function (event) {
         attacking();
     })
 });
 
+/* outline Notes
+
+load characters on page [Good]
+choose character
+	- on click of character 
+		- set character to be  the chosen character to fight with [issue trying to get it to stay]
+		- remove other characters from character area and add them to the enemies area [Almost]
+		- store character hP and attack in variables.
+choose enemy
+	- on click of enemy
+		- set enemy to be the chosen enemy to defeat
+		- remove enemy from enemy area and add to defender area
+		- if an enemy is already chosen
+			- make other enemies unclickable and/or wait till current enemy is 				defeated (hP = 0) or if the current enemy is still in the 	defender area 				and still fightable.
+		- store enemy hP in a variable
+click attack button
+	- chosen character takes damage (currentChara hP - current enemy attack)
+	- enemy character takes damage (currentEnemy hP - currentChara attack)
+	- display as a message how much damage your character has dealt to the enemy, and 	how much damage the enemy has dealt to you.
+	- add original currentcharacter attack value to its current value (increase attack in 	incriments of its original attack value)
+	- check defeat
+		- if enemy hP = 0 or less
+			- show message of deafeat of enemy, and to choose another enemy 				to fight.
+			- make other enemies clickable again, and remove current enemy 				from defender zone, as well as setting currentEnemy to 0 again.
+			- if no other enemies are available to fight
+				- show message Winner!
+				- show reset button with message "play again?"
+		- if enemy hP is greater than 0
+			-wait for attack button click
+		- if currentCharacter hP is 0 or less
+			- show message that the game is over
+			- show restart button
+			- reset the page
+		- if currentCharacter hP is greater than 0
+			- wait for attack button click
+*/
