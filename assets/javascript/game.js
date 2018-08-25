@@ -31,6 +31,7 @@ let currentEnemy = 0;
 let defender = 0;
 let yourHp = 0;
 let yourAttack = 0;
+let enemyName = 0;
 let enemyHp = 0;
 let enemyAttack = 0;
 
@@ -53,7 +54,9 @@ let chooseChar = function () {
         $(event.target.parentNode).removeClass(".character");
         $(event.target.parentNode).addClass("chosen");
         currentChara = $(event.target.parentNode);
-        console.log(currentChara); // trouble getting character to stay
+        yourHp = $(currentChara.hP).val();
+        yourAttack = $(currentChara.attack).val();
+        // trouble getting character to stay
         // appends other characters by their class name to a new part of the page where the enemies go by the enemies class name
         let enemies = $('.character');
         $('.enemies').append(enemies);
@@ -73,21 +76,43 @@ let chooseVillain = function () {
         $(event.target.parentNode).addClass("defender");
         currentEnemy = $(event.target.parentNode);
         $('.fightingArea').append(currentEnemy);
+        enemyName = $(currentEnemy.name).val();
+        enemyHp = $(currentEnemy.hP).val();
+        enemyAttack = $(currentEnemy.attack).val();
     } else {
         let enemyMesg = $('<strong>').text('Keep Fighting!!');
-        $('.enemyMsg').append(enemyMesg);
+        $('.enemyMsg').empty().append(enemyMesg);
     }
 }
 
 // actions for when the attack button is pushed
-let attacking = function (event) {
-    for (let i = 0; i < characters.length; i++) {
-        if ($('currentChara.character-name') === characters[i].name) {
-            // not sure how to do this part
-        }
+let attacking = function () {
+    let remainYourHp = yourHp - enemyAttack;
+    let remainEnemyHp = enemyHp - yourAttack;
+    let yourStatus = $('<p>').text('You have dealt ' + yourAttack + ' damage to ' + enemyName);
+    let enemyStatus = $('<p>').text(enemyName + ' has dealt ' + enemyAttack + ' to you');
+    $('.actionText').empty().append(yourStatus).append(enemyStatus);
+    yourHp = remainYourHp;
+    enemyHp = remainEnemyHp;
+   
+    if (yourHp < 0){
+        $('.actionText').empty().text("You've been defeated!! feel free to try again Loser");
+        $('button.reset').css("visibility","visible");
+    }else{
+         yourAttack = yourAttack + $(currentChara.attack).val();
+    }
+    if(enemyHp < 0){
+        $('.actionText').empty().text("Huzzah!! youve beaten an enemy!!");
+    } else{
+        
     }
 }
 
+let reset = function (){
+    currentChara = 0;
+    currentEnemy = 0;
+    
+}
 $(document).ready(function () {
     //rendering each character
     $(characters).ready(createChar);
@@ -102,6 +127,9 @@ $(document).ready(function () {
     // function for action of attack button
     $(document).on('click', '.attack', function (event) {
         attacking();
+    })
+    $(document).on('click', '.reset', function (event){
+        reset();
     })
 });
 
